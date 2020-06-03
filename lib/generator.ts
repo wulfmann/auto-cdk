@@ -24,7 +24,7 @@ export class Generator {
     this.core = core;
     this.resources = resources;
     
-    this.createResource(this.core.root, this.resources);
+    this.createResource(this.core.api.root, this.resources);
   }
   
   private createResource(parent: ag.Resource | ag.IResource, next: ResourceMapItem) {
