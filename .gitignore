@@ -1,0 +1,5 @@
+lib/
+.vscode
+.DS_Store
+*/**/*.js
+node_modules
