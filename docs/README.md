@@ -1,6 +1,8 @@
 # Auto CDK
 
-This project aims to provide a simple experience for building serverless applications with AWS [API Gateway]() and [Lambda]().
+This project aims to provide a simple experience for building serverless applications with AWS [API Gateway](https://aws.amazon.com/api-gateway/) and [Lambda](https://aws.amazon.com/lambda/)
+
+The api is largely inspired by [Vercel Now](https://github.com/vercel/vercel).
 
 ## Quickstart
 
@@ -28,10 +30,17 @@ module.exports = (event, ctx) => {
 }
 ```
 
+Add a script to your `package.json`:
+
 ```json
 {
   "scripts": {
     "dev": "auto-cdk"
+    ...
   }
 }
+```
+
+```bash
+yarn dev
 ```
