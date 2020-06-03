@@ -15,6 +15,6 @@ export class Core {
   constructor(id: string, props?: CoreProps) {
     this.app = props?.app || new cdk.App();
     this.stack = props?.stack || new cdk.Stack(this.app);
-    this.api = new ag.RestApi(id);
+    this.api = new ag.RestApi(this.stack, id);
   }
 }
