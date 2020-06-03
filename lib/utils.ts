@@ -14,3 +14,7 @@ async function* walk(dir) {
         else if (d.isFile()) yield entry;
     }
 }
+
+export const generateEntries = async () => {
+  return
+}
