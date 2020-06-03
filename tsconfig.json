@@ -22,11 +22,11 @@
         "strictPropertyInitialization": false,
         "typeRoots": [
             "./node_modules/@types"
-        ],
-        "outDir": "lib"
+        ]
     },
     "include": [
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "bin/**/*.ts"
     ],
     "exclude": [
         "cdk.out",

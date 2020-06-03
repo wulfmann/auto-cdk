@@ -1,4 +1,3 @@
-lib/
 .vscode
 .DS_Store
 */**/*.js
