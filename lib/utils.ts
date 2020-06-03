@@ -2,7 +2,7 @@ import { promises } as fs from 'fs';
 import { basename } from 'path';
 import { RouteType, RouteMap } from './routes';
 
-export async function directoryTree(dir: string) {
+export async function directoryTree(dir: string): Promise<RouteMap> {
   const item = {
     type: RouteType.DIRECTORY
   }
@@ -24,4 +24,8 @@ export async function directoryTree(dir: string) {
   }
 
   return item;
+}
+
+export const constructDirectoryTree = async (dir: string): Promise<RouteMap> => {
+  return await directoryTree(dir)
 }
