@@ -25,7 +25,7 @@ export class Generator {
     this.resources = resources;
     
     for (const r in this.resources) {
-    this.createResource(this.core.api.root, this.resorces[r]);
+    this.createResource(this.core.api.root, this.resources[r]);
     }
   }
   
