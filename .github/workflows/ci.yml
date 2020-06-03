@@ -1,0 +1,24 @@
+name: CICD
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+        registry-url: 'https://registry.npmjs.org'
+    - run: npm i -g yarn
+    - run: yarn
+    - run: yarn test
+    - run: yarn lint
+    - run: yarn build
+    - run: yarn publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.YARN_TOKEN }}
