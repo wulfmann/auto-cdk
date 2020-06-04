@@ -43,11 +43,11 @@ export class AutoCdk {
     return this.app.synth();
   }
   
-  public async constructRoutes(): Promise<RouteMap> {
+  public async constructRoutes(): Promise<IRouteMap> {
     return constructRouteMap(this.root);
   }
   
-  public async constructResources(): Promise<ResourceMap> {
+  public async constructResources(): Promise<IResourceMap> {
     const routes = await this.constructRoutes();
     return constructResourceMap(routes);
   }

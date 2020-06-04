@@ -1,6 +1,6 @@
-import { RouteMap } from '../../routes';
+import { IRouteMap } from '../../routes';
 
-export const generateWebackEntries = (route: RouteMap): string[] => {
+export const generateWebackEntries = (route: IRouteMap): string[] => {
     const result: string[] = [];
     if (route.children) {
         const children: string[] = [];
