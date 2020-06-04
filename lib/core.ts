@@ -5,6 +5,7 @@ import * as lambda from '@aws-cdk/aws-lambda';
 export interface CoreProps {
   app?: cdk.App;
   stack?: cdk.Stack;
+  api?: ag.RestApi;
 }
 
 export class Core {
@@ -15,6 +16,6 @@ export class Core {
   constructor(id: string, props?: CoreProps) {
     this.app = props?.app || new cdk.App();
     this.stack = props?.stack || new cdk.Stack(this.app);
-    this.api = new ag.RestApi(this.stack, id);
+    this.api = props?.api || new ag.RestApi(this.stack, id);
   }
 }

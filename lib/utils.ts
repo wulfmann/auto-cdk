@@ -31,7 +31,7 @@ export async function directoryTree(dir: string): Promise<RouteMap> {
   return item;
 }
 
-export const constructDirectoryTree = async (dir: string): Promise<RouteMap> => {
+export const constructRouteMap = async (dir: string): Promise<RouteMap> => {
   return await directoryTree(dir)
 }
 

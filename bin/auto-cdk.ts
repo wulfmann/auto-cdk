@@ -1,3 +1,8 @@
 #!/usr/bin/env node
 
-import { Generator } from '../lib/generator';
+import { AutoCdk } from '../lib';
+
+const app = AutoCdk();
+
+const routes = app.constructRoutes();
+app.constructApi(routes);
