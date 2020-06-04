@@ -32,7 +32,7 @@ export const createEntrypoints = (routeMap: IRouteMap): Entrypoint => {
     if (routeMap.children) {
         for (const key in routeMap.children) {
             const current = routeMap.children[key];
-            result[current.path] = createEntrypoints(routeMap.children[key]).toString();
+            Object.assign(result, ...createEntrypoints(routeMap.children[key]));
         }
     } else {
         result[routeMap.path] = routeMap.path;
