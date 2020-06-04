@@ -36,7 +36,7 @@ export const constructDirectoryTree = async (dir: string): Promise<RouteMap> => 
 }
 
 export const generateWebackEntries = (routes: RouteMap): string[] => {
-  return routes.map(route => {
+  return Object.values(routes).map(route => {
     if (route.children) {
       return generateWebpackEntries(route);
     } else {
