@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@aws-cdk/aws-apigateway": "1.42.1",
-    "@aws-cdk/aws-lambda": "^1.42.1",
+    "@aws-cdk/aws-lambda": "1.42.1",
     "@aws-cdk/core": "1.42.1",
     "webpack": "^4.43.0",
     "yargs": "^15.3.1"

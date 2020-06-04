@@ -5,7 +5,7 @@ import { AutoCdk } from '../lib';
 (async () => {
     try {
         const app = new AutoCdk('MyApp');
-        await app.constructApi();
+        const resources = await app.constructResources();
         app.synth();
     } catch (e) {
         console.error(e);

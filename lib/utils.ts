@@ -1,10 +1,10 @@
 import { promises as fs } from 'fs';
 import { basename, join } from 'path';
-import { RouteType, Route } from './routes';
+import { RouteType, IRouteMap } from './routes';
 
-export async function directoryTree(dir: string): Promise<Route> {
+export async function directoryTree(dir: string): Promise<IRouteMap> {
   const root = basename(dir);
-  const item: Route =  {
+  const item: IRouteMap =  {
     type: RouteType.DIRECTORY,
     name: root,
     path: dir
@@ -30,20 +30,6 @@ export async function directoryTree(dir: string): Promise<Route> {
   }
   return item;
 }
-
-export const generateWebackEntries = (route: Route): string[] => {
-  const result: string[] = [];
-  if (route.children) {
-    const children: string[] = [];
-    for (const key in route.children) {
-      children.push(...generateWebackEntries(route.children[key]));
-    }
-    result.push(...children);
-  } else {
-    result.push(route.path)
-  }
-  return result;
-};
 
 export const isNotFound = (error: any) => {
   return error.code === 'ENOENT';

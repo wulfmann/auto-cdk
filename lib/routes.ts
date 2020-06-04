@@ -5,18 +5,18 @@ export enum RouteType {
     FILE='FILE'
 }
 
-export interface Route {
-    children?: RouteMap;
+export interface IRouteMap {
+    children?: IRoute;
     type: RouteType;
     name: string;
     path: string;
 }
 
-export interface RouteMap {
-    [key: string]: Route;
+export interface IRoute {
+    [key: string]: IRouteMap;
 }
 
-export const constructRouteMap = async (dir: string): Promise<Route> => {
+export const constructRouteMap = async (dir: string): Promise<IRouteMap> => {
     try {
         return await directoryTree(dir);
     }catch (e) {
