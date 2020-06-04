@@ -1,7 +1,3 @@
-import * as path from 'path';
-import * as fs from 'fs';
-import { walk } from './utils';
-
 export enum RouteType {
     DIRECTORY='DIRECTORY',
     FILE='FILE'
@@ -10,6 +6,8 @@ export enum RouteType {
 export interface Route {
     children?: RouteMap;
     type: RouteType;
+    name: string;
+    path: string;
 }
 
 export interface RouteMap {
