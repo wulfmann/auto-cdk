@@ -1,3 +1,4 @@
 export { AutoCdk, AutoCdkProps } from './autocdk';
-export { Route, RouteMap, RouteType } from './routes';
-export * from './utils';
+export { IRoute, IRouteMap, RouteType } from './routes';
+export { IResource, IResourceMap, ResourceType } from './resources';
+

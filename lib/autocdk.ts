@@ -21,17 +21,19 @@ export class AutoCdk {
   public readonly stack: cdk.Stack;
   public readonly api: ag.RestApi;
   public readonly config: Config;
+  public routeMap: IRouteMap;
 
   private readonly root: string;
 
   constructor(id: string, props?: AutoCdkProps) {
+    this.root = props?.root || join(process.cwd(), 'api');
+
     const defaultConfig: Config = {
-      createEmptyResources: true
+      createEmptyResources: true,
+      root: this.root
     };
 
     this.config = defaultConfig;
-
-    this.root = props?.root || join(process.cwd(), 'api');
     this.app = props?.app  || new cdk.App({
       outdir: `${process.cwd()}/cdk.out`
     });
@@ -44,7 +46,9 @@ export class AutoCdk {
   }
   
   public async constructRoutes(): Promise<IRouteMap> {
-    return constructRouteMap(this.root);
+    const routeMap = await constructRouteMap(this.root);
+    this.routeMap = routeMap;
+    return this.routeMap;
   }
   
   public async constructResources(): Promise<IResourceMap> {
