@@ -2,3 +2,4 @@
 .DS_Store
 */**/*.js
 node_modules
+*/**/*.d.ts

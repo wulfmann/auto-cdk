@@ -9,7 +9,7 @@
   "license": "MIT",
   "private": false,
   "bin": {
-    "auto-cdk": "bin/auto-cdk.js"
+    "auto-cdk": "bin/auto-cdk"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.42.1",
@@ -24,10 +24,13 @@
     "typescript": "^3.9.3"
   },
   "scripts": {
-    "build": "tsc",
+    "build:source": "tsc",
+    "build:bin": "chmod +x bin/auto-cdk",
+    "build": "yarn build:source && yarn build:bin",
     "watch": "tsc -w",
     "cdk": "cdk",
     "test": "jest",
+    "ts-node": "ts-node",
     "lint": "tslint '{src/**/*,test/**/*}.ts'",
     "format": "prettier '{src/**/*,test/**/*}.ts'"
   },

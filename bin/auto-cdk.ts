@@ -2,7 +2,12 @@
 
 import { AutoCdk } from '../lib';
 
-const app = AutoCdk();
-
-const routes = app.constructRoutes();
-app.constructApi(routes);
+(async () => {
+    try {
+        const app = new AutoCdk('MyApp');
+        await app.constructApi();
+        app.synth();
+    } catch (e) {
+        console.error(e);
+    }
+})();

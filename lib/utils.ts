@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import { basename, join } from 'path';
-import { RouteType, RouteMap, Route } from './routes';
+import { RouteType, Route } from './routes';
 
 export async function directoryTree(dir: string): Promise<Route> {
   const root = basename(dir);
@@ -31,19 +31,20 @@ export async function directoryTree(dir: string): Promise<Route> {
   return item;
 }
 
-export const constructRouteMap = async (dir: string): Promise<RouteMap> => {
-  const root = basename(dir);
-  return {
-    [root]: await directoryTree(dir)
+export const generateWebackEntries = (route: Route): string[] => {
+  const result: string[] = [];
+  if (route.children) {
+    const children: string[] = [];
+    for (const key in route.children) {
+      children.push(...generateWebackEntries(route.children[key]));
+    }
+    result.push(...children);
+  } else {
+    result.push(route.path)
   }
-}
+  return result;
+};
 
-// export const generateWebackEntries = (routes: RouteMap): string[] => {
-//   return Object.values(routes).map(route => {
-//     if (route.children) {
-//       return generateWebpackEntries(route);
-//     } else {
-//       return route.path;
-//     }
-//   });
-// };
+export const isNotFound = (error: any) => {
+  return error.code === 'ENOENT';
+};

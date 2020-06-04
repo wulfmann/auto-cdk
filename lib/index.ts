@@ -1,4 +1,3 @@
 export { AutoCdk, AutoCdkProps } from './autocdk';
-export * from './core';
-export * from './routes';
+export { Route, RouteMap, RouteType } from './routes';
 export * from './utils';

@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require(‘./auto-cdk.js’);
+require('./auto-cdk.js')
