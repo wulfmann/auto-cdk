@@ -1,10 +1,11 @@
 import { AutoCdk } from '../lib/autocdk';
 import { ResourceType } from '../lib/resources';
 import { RouteType } from '../lib/routes';
+import { Environment } from '../lib/config';
 
 describe('autocdk.ts', () => {
     it('constructRoutes', async () => {
-        const app = new AutoCdk('MyApp', { root: 'test/mock' });
+        const app = new AutoCdk('MyApp', Environment.DEVELOPMENT, { config: { rootDirectory: 'test/mock' }});
         const res = await app.constructRoutes();
         expect(res).toEqual({
             name: 'mock',
@@ -49,8 +50,9 @@ describe('autocdk.ts', () => {
         });
     });
     it('constructResources', async () => {
-        const app = new AutoCdk('MyApp', { root: 'test/mock' });
+        const app = new AutoCdk('MyApp', Environment.DEVELOPMENT, { config: { workingDirectory: 'test/mock' }});
         const res = await app.constructResources();
+        console.log(res)
         const expectedResources = {
             name: 'mock',
             path: 'test/mock',

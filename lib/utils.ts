@@ -4,10 +4,12 @@ import { RouteType, IRouteMap } from './routes';
 
 export async function directoryTree(dir: string): Promise<IRouteMap> {
   const root = basename(dir);
+
   const item: IRouteMap =  {
     type: RouteType.DIRECTORY,
     name: root,
-    path: dir
+    path: dir,
+    relativePath: `./${dir}`
   }
 
   for await (const path of await fs.opendir(dir)) {
@@ -22,7 +24,8 @@ export async function directoryTree(dir: string): Promise<IRouteMap> {
       item.children[name] = {
         type: RouteType.FILE,
         name,
-        path: fullPath
+        path: fullPath,
+        relativePath: `./${fullPath}`
       }
     } else {
       continue;
