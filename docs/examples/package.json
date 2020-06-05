@@ -1,0 +1,14 @@
+{
+    "name": "example-api",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "dev": "auto-cdk dev",
+        "build": "auto-cdk build",
+        "sam": "sam local start-api -t cdk.out/api.template.json"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "auto-cdk": "^0.1.1"
+    }
+}

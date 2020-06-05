@@ -3,9 +3,8 @@ import { createEntrypoints } from './webpack/entrypoints';
 import { createConfig } from './webpack/config';
 import { compile } from './webpack/compiler';
 import { Config } from '../config';
-import { Compiler } from 'webpack';
 
-export async function builder(config: Config): Promise<Compiler> {
+export async function builder(config: Config): Promise<void> {
     const routes = await constructRouteMap(config.rootDirectory, config);
     const entrypoints = createEntrypoints(routes, config.rootDirectory, config);
     const configs = await createConfig(config, entrypoints, config.env);

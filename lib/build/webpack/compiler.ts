@@ -1,8 +1,8 @@
 import * as webpack from 'webpack';
-import { Configuration, Stats, Compiler } from 'webpack';
+import { Configuration, Stats } from 'webpack';
 import { Environment } from '../../config';
 
-export const compilerHandler = (err: Error, stats: Stats): void => {
+const compilerHandler = (err: Error, stats: Stats): void => {
     if (err) {
         const reason = err?.toString()
         if (reason) {
@@ -28,7 +28,24 @@ export const compilerHandler = (err: Error, stats: Stats): void => {
     }));
 }
 
-export const compile = (config: Configuration, env: Environment): Promise<Compiler> => {
-    const compiler = webpack(config);
-    return Promise.resolve(compiler);
+export const compile = (config: Configuration, env: Environment): Promise<void> => {
+    console.log('Beginning Compile')
+    return new Promise(async (resolve, reject) => {
+        try {
+            const compiler = webpack(config);
+            if (env === Environment.DEVELOPMENT) {
+                compiler.watch({ ignored: /node_modules/ }, compilerHandler);
+                await compiler.hooks.afterEmit.tapAsync('developmentCompiler', () => {
+                    resolve()
+                });
+            } else {
+                compiler.run(compilerHandler);
+                await compiler.hooks.afterEmit.tapAsync('productionCompiler', () => {
+                    resolve()
+                });
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
 }

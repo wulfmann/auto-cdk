@@ -4,6 +4,7 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import { constructRouteMap, IRouteMap } from './routes';
 import { constructResourceMap, IResourceMap, IResource, ResourceType } from './resources';
 import { Config, Environment, ConfigProps } from './config';
+import { isNotFound } from './utils';
 
 const INDEX = 'index';
 
@@ -51,12 +52,18 @@ export class AutoCdk {
   }
   
   public async constructRoutes(): Promise<IRouteMap> {
+    if (this.config.debug) {
+      console.log('Constructing Routes')
+    }
     const routeMap = await constructRouteMap(this.config.rootDirectory, this.config);
     this.routeMap = routeMap;
     return this.routeMap;
   }
   
   public async constructResources(): Promise<void> {
+    if (this.config.debug) {
+      console.log('Constructing Resources')
+    }
     const routes = await this.constructRoutes();
     const resourceMap = constructResourceMap(routes, this.config.rootDirectory, this.config);
     this.createResourcesFromMap(this.api.root, resourceMap);
@@ -114,8 +121,17 @@ export class AutoCdk {
       code: lambda.Code.fromAsset(assetPath)
     };
 
-    const fn = this.createLambda(`${id}Function`, lambdaProps);
-    return new ag.LambdaIntegration(fn);
+    try {
+      const fn = this.createLambda(`${id}Function`, lambdaProps);
+      return new ag.LambdaIntegration(fn);
+    } catch (e) {
+      if (isNotFound(e)) {
+        console.error(`Unable to add lambda integration. ${assetPath} was not found. This most likely means webpack did not run before this process.`);
+        process.exit();
+      } else {
+        throw e;
+      }
+    }
   }
 
   private createLambda(id: string, props: lambda.FunctionProps) {
