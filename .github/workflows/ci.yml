@@ -19,6 +19,6 @@ jobs:
     - run: yarn test
     - run: yarn lint
     - run: yarn build
-    # - run: yarn publish
-    #   env:
-    #     NODE_AUTH_TOKEN: ${{ secrets.YARN_TOKEN }}
+    - run: yarn publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.YARN_TOKEN }}
