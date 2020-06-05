@@ -1,5 +1,5 @@
 import * as webpack from 'webpack';
-import { Configuration, Stats } from 'webpack';
+import { Configuration, Stats, Compiler } from 'webpack';
 import { Environment } from '../../config';
 
 const compilerHandler = (err: Error, stats: Stats): void => {
@@ -28,13 +28,7 @@ const compilerHandler = (err: Error, stats: Stats): void => {
     }));
 }
 
-export const compile = (config: Configuration, env: Environment): Promise<void> => {
+export const compile = (config: Configuration, env: Environment): Promise<Compiler> => {
     const compiler = webpack(config);
-    if (env === Environment.DEVELOPMENT) {
-        compiler.watch({ ignored: /node_modules/ }, compilerHandler);
-        return Promise.resolve();
-    } else {
-        compiler.run(compilerHandler);
-        return Promise.resolve();
-    }
+    return Promise.resolve(compiler);
 }

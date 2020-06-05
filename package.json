@@ -1,6 +1,6 @@
 {
   "name": "auto-cdk",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Effortless APIs with CDK",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
