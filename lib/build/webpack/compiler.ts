@@ -2,7 +2,7 @@ import * as webpack from 'webpack';
 import { Configuration, Stats, Compiler } from 'webpack';
 import { Environment } from '../../config';
 
-const compilerHandler = (err: Error, stats: Stats): void => {
+export const compilerHandler = (err: Error, stats: Stats): void => {
     if (err) {
         const reason = err?.toString()
         if (reason) {
