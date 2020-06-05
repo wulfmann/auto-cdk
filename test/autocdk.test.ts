@@ -7,93 +7,62 @@ describe('autocdk.ts', () => {
     it('constructRoutes', async () => {
         const app = new AutoCdk('MyApp', Environment.DEVELOPMENT, { config: { rootDirectory: 'test/mock' }});
         const res = await app.constructRoutes();
+
         expect(res).toEqual({
             name: 'mock',
             type: RouteType.DIRECTORY,
             path: 'test/mock',
+            relativePath: './test/mock',
             children: {
-                '{id}': {
-                    name: '{id}',
+                api: {
+                    name: 'api',
                     type: RouteType.DIRECTORY,
-                    path: 'test/mock/{id}',
+                    path: 'test/mock/api',
+                    relativePath: './test/mock/api',
                     children: {
+                        '{id}': {
+                            name: '{id}',
+                            type: RouteType.DIRECTORY,
+                            path: 'test/mock/api/{id}',
+                            relativePath: './test/mock/api/{id}',
+                            children: {
+                                'index.ts': {
+                                    name: 'index.ts',
+                                    path: 'test/mock/api/{id}/index.ts',
+                                    relativePath: './test/mock/api/{id}/index.ts',
+                                    type: RouteType.FILE
+                                },
+                                'settings.ts': {
+                                    name: 'settings.ts',
+                                    path: 'test/mock/api/{id}/settings.ts',
+                                    relativePath: './test/mock/api/{id}/settings.ts',
+                                    type: RouteType.FILE
+                                }
+                            }
+                        },
+                        another: {
+                            name: 'another',
+                            path: 'test/mock/api/another',
+                            relativePath: './test/mock/api/another',
+                            type: RouteType.DIRECTORY,
+                            children: {
+                                'test.ts': {
+                                    name: 'test.ts',
+                                    path: 'test/mock/api/another/test.ts',
+                                    relativePath: './test/mock/api/another/test.ts',
+                                    type: RouteType.FILE
+                                }
+                            }
+                        },
                         'index.ts': {
                             name: 'index.ts',
-                            path: 'test/mock/{id}/index.ts',
-                            type: RouteType.FILE
-                        },
-                        'settings.ts': {
-                            name: 'settings.ts',
-                            path: 'test/mock/{id}/settings.ts',
+                            path: 'test/mock/api/index.ts',
+                            relativePath: './test/mock/api/index.ts',
                             type: RouteType.FILE
                         }
                     }
-                },
-                another: {
-                    name: 'another',
-                    path: 'test/mock/another',
-                    type: RouteType.DIRECTORY,
-                    children: {
-                        'test.ts': {
-                            name: 'test.ts',
-                            path: 'test/mock/another/test.ts',
-                            type: RouteType.FILE
-                        }
-                    }
-                },
-                'index.ts': {
-                    name: 'index.ts',
-                    path: 'test/mock/index.ts',
-                    type: RouteType.FILE
                 }
             }
         });
     });
-    it('constructResources', async () => {
-        const app = new AutoCdk('MyApp', Environment.DEVELOPMENT, { config: { workingDirectory: 'test/mock' }});
-        const res = await app.constructResources();
-        console.log(res)
-        const expectedResources = {
-            name: 'mock',
-            path: 'test/mock',
-            type: ResourceType.RESOURCE,
-            children: {
-                '{id}': {
-                    name: '{id}',
-                    path: 'test/mock/{id}',
-                    type: ResourceType.RESOURCE,
-                    children: {
-                        'index.ts': {
-                            name: 'index.ts',
-                            path: 'test/mock/{id}/index.ts',
-                            type: ResourceType.METHOD,
-                        },
-                        'settings.ts': {
-                            name: 'settings.ts',
-                            path: 'test/mock/{id}/settings.ts',
-                            type: ResourceType.METHOD,
-                        }
-                    }
-                },
-                'index.ts': {
-                    name: 'index.ts',
-                    path: 'test/mock/index.ts',
-                    type: ResourceType.METHOD,
-                },
-                another: {
-                    name: 'another',
-                    path: 'test/mock/another',
-                    type: ResourceType.RESOURCE,
-                    children: {
-                        'test.ts': {
-                            name: 'test.ts',
-                            path: 'test/mock/another/test.ts',
-                            type: ResourceType.METHOD,
-                        }
-                    }
-                }
-            }
-        };
-        expect(res).toEqual(expectedResources);
-    })
 });

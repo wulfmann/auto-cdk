@@ -19,7 +19,6 @@ export interface IRoute {
 }
 
 export const constructRouteMap = async (dir: string, config: Config): Promise<IRouteMap> => {
-    console.log(process.cwd())
     if (config.debug) {
         console.log(`Constructing RouteMap for: ${dir}`);
     }

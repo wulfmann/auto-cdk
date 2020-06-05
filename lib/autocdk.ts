@@ -34,6 +34,10 @@ export class AutoCdk {
     this.id = id;
     this.config = new Config({ env, ...props?.config });
 
+    if (this.config.debug) {
+      console.log(`Using: ${this.config.workingDirectory} as working directory`);
+    }
+
     this.app = props?.app  || new cdk.App({
       outdir: `${this.config.workingDirectory}/cdk.out`
     });
