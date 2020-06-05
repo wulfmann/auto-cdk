@@ -12,10 +12,9 @@ auto-cdk [subcommand] [options]
 
 |----|-----------|--------|-------|
 |name|description|required|default|
-
---version
---debug
---help
+|--version|Displays the version of `auto-cdk`|false|none|
+|--debug|Runs `auto-cdk` with debug logging|false|none|
+|--help|Displays the help text|false|none|
 
 ## Subcommands
 
