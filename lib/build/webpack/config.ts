@@ -47,7 +47,7 @@ export const createProductionConfig = async (config: Config, entry: Entrypoint):
 export const createConfig = async(config: Config, entry: Entrypoint, env: string): Promise<Configuration> => {
     if (env === 'development') {
         return createDevelopmentConfig(config, entry);
-    } else if (env === 'development') {
+    } else if (env === 'production') {
         return createProductionConfig(config, entry);
     } else {
        return Promise.reject(`expected ${env} to be one of development or production. Not sure how to handle this environment`)
