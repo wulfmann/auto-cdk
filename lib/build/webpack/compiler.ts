@@ -28,11 +28,13 @@ const compilerHandler = (err: Error, stats: Stats): void => {
     }));
 }
 
-export const compile = (config: Configuration, env: Environment): void => {
+export const compile = (config: Configuration, env: Environment): Promise<void> => {
     const compiler = webpack(config);
     if (env === Environment.DEVELOPMENT) {
         compiler.watch({ ignored: /node_modules/ }, compilerHandler);
+        return Promise.resolve();
     } else {
         compiler.run(compilerHandler);
+        return Promise.resolve();
     }
 }
