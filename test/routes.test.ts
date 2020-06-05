@@ -26,16 +26,18 @@ describe('routes.ts', () => {
                                 'index.ts': {
                                     name: 'index.ts',
                                     path: 'test/mock/api/{id}/index.ts',
-                                    relativePath: './test/mock/api/{id}/index.ts',
-                                    type: RouteType.FILE
+                                    relativePath:
+                                        './test/mock/api/{id}/index.ts',
+                                    type: RouteType.FILE,
                                 },
                                 'settings.ts': {
                                     name: 'settings.ts',
                                     path: 'test/mock/api/{id}/settings.ts',
-                                    relativePath: './test/mock/api/{id}/settings.ts',
-                                    type: RouteType.FILE
-                                }
-                            }
+                                    relativePath:
+                                        './test/mock/api/{id}/settings.ts',
+                                    type: RouteType.FILE,
+                                },
+                            },
                         },
                         another: {
                             name: 'another',
@@ -46,20 +48,21 @@ describe('routes.ts', () => {
                                 'test.ts': {
                                     name: 'test.ts',
                                     path: 'test/mock/api/another/test.ts',
-                                    relativePath: './test/mock/api/another/test.ts',
-                                    type: RouteType.FILE
-                                }
-                            }
+                                    relativePath:
+                                        './test/mock/api/another/test.ts',
+                                    type: RouteType.FILE,
+                                },
+                            },
                         },
                         'index.ts': {
                             name: 'index.ts',
                             path: 'test/mock/api/index.ts',
                             relativePath: './test/mock/api/index.ts',
-                            type: RouteType.FILE
-                        }
-                    }
-                }
-            }
+                            type: RouteType.FILE,
+                        },
+                    },
+                },
+            },
         });
     });
 });
