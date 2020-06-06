@@ -1,10 +1,11 @@
 {
-    "name": "api-with-parametized-path",
+    "name": "api-with-single-handler-all-methods",
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
         "dev": "auto-cdk dev",
-        "build": "auto-cdk build"
+        "build": "auto-cdk build",
+        "sam": "sam local start-api -t cdk.out/api.template.json"
     },
     "license": "MIT",
     "dependencies": {

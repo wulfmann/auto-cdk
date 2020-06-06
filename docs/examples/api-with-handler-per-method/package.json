@@ -1,11 +1,10 @@
 {
-    "name": "example-api",
+    "name": "api-with-handler-per-model",
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
         "dev": "auto-cdk dev",
-        "build": "auto-cdk build",
-        "sam": "sam local start-api -t cdk.out/api.template.json"
+        "build": "auto-cdk build"
     },
     "license": "MIT",
     "dependencies": {
