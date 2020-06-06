@@ -1,11 +1,10 @@
 # Auto CDK
 
-This project aims to provide a simple experience for building serverless applications with AWS [API Gateway](https://aws.amazon.com/api-gateway/) and [Lambda](https://aws.amazon.com/lambda/)
+`auto-cdk` lets you generate an api gateway with lambda integrations based on the filesystem. It makes use of [AWS CDK](https://aws.amazon.com/cdk/) to generate cloudformation stacks, and [Webpack](https://webpack.js.org) for bundling and code-splitting.
 
-The api is largely inspired by [Vercel Now](https://github.com/vercel/vercel).
+**Caveats**
 
-## Features
-
+Currently this project only aims to build and package node/typescript-based integrations. It is on the roadmap to support more, but will not be available until a later version.
 
 ## Quickstart
 
@@ -16,7 +15,7 @@ yarn add auto-cdk
 Create an `api` directory and add a file to it that exports a function named `handler`:
 
 ```bash
-mkdir api && touch api/index.ts
+$ mkdir api && touch api/index.ts
 ```
 
 ```js
@@ -33,30 +32,30 @@ exports.handler = (event, ctx) => {
 }
 ```
 
-Add a script to your `package.json`:
-
-```json
-{
-  "scripts": {
-    "dev": "auto-cdk dev"
-  }
-}
-```
-
 Run:
 
 ```bash
-yarn dev
+$ yarn dev
 ```
 
-You should now see a folder named `dist` and a folder named `cdk.out` appear in your root directory.
+You should now have webpack auto-compiling when your source changes, and a cdk stack that has been generated in `cdk.out`.
 
-Webpack is also running in watch mode, so any changes made to api/* will automatically be recompiled.
+### Bonus
 
-You can now run the api locally with [sam-cli](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html):
+If you install [AWS sam-cli](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html), you can run the api on localhost with the following:
 
 ```bash
-sam local start-api cdk.out/*.template.json
+$ sam local start-api cdk.out/*.template.json
 ```
 
-View examples [here](/docs/examples).
+View more examples [here](/docs/examples).
+
+## Features
+
+* Automatic CDK Stack Generation
+* Code-Splitting and Bundling with Webpack
+* Out of the box typescript support
+
+## Contributing
+
+If you would like to make a contribution or learn more about running this project locally, please review the [Contributing Documentation](/CONTRIBUTING.md).
