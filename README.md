@@ -4,6 +4,9 @@ This project aims to provide a simple experience for building serverless applica
 
 The api is largely inspired by [Vercel Now](https://github.com/vercel/vercel).
 
+## Features
+
+
 ## Quickstart
 
 ```bash

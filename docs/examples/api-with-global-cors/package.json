@@ -1,5 +1,5 @@
 {
-    "name": "api-with-existing-cdk-app",
+    "name": "api-with-global-cors",
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
