@@ -11,6 +11,13 @@ const INDEX = 'index';
 export type ResourceLike = ag.Resource | ag.IResource;
 export type MethodLike = ag.Method;
 
+export interface ExportedIntegrationOptions {
+  model?: {
+    contentType: string
+    schema: ag.JsonSchema;
+  }
+}
+
 export interface AutoCdkProps{
   app?: cdk.App;
   stack?: cdk.Stack;
@@ -69,7 +76,7 @@ export class AutoCdk {
     this.createResourcesFromMap(this.api.root, resourceMap);
   }
 
-  private createResourcesFromMap(parent: ResourceLike, resourceMap: IResourceMap) {
+  private async createResourcesFromMap(parent: ResourceLike, resourceMap: IResourceMap) {
     if (resourceMap.type === ResourceType.RESOURCE) {
       if (resourceMap.children) {
         const resource = this.createResource(parent, resourceMap.name);
@@ -84,10 +91,10 @@ export class AutoCdk {
       }
     } else {
       if (resourceMap.name === INDEX) {
-        this.createMethod(parent, resourceMap);
+        await this.createMethod(parent, resourceMap);
       } else {
         const resource = this.createResource(parent, resourceMap.name);
-        this.createMethod(resource, resourceMap);
+        await this.createMethod(resource, resourceMap);
       }
     }
   }
@@ -100,7 +107,7 @@ export class AutoCdk {
     return parent.addResource(path, options);
   }
 
-  private createMethod(parent: ResourceLike, resource: IResourceMap, options?: ag.MethodOptions) {
+  private async createMethod(parent: ResourceLike, resource: IResourceMap, options?: ag.MethodOptions) {
     const method = 'ANY';
 
     if (this.config.debug) {
@@ -108,13 +115,52 @@ export class AutoCdk {
     }
     
     const logicalId = `${this.id}${parent.path}${method}Function`;
-    const integration = this.createIntegration(resource, logicalId);
-    return parent.addMethod(method, integration, options);
-  }
-
-  private createIntegration(resource: IResourceMap, id: string, props?: CreateIntegrationProps) {
     const normalizedAssetDir = this.config.assetDir.endsWith('/') ? this.config.assetDir : `${this.config.assetDir}/`;
     const assetPath = `${normalizedAssetDir}${resource.assetPath}`;
+
+    const exportedIntegrationOptions: ExportedIntegrationOptions = await gatherIntegrationOptions(assetPath);
+
+    const integration = await this.createIntegration(assetPath, logicalId);
+
+    const methodProps: {
+      requestModels?: {
+        [param: string]: ag.IModel;
+      },
+      requestValidator?: ag.IRequestValidator;
+    } = {};
+
+    if (exportedIntegrationOptions.model) {
+      const { schema, contentType } = exportedIntegrationOptions.model;
+      const modelName = ''
+      const model = this.api.addModel('', {
+        schema,
+        modelName
+      });
+
+      if (!methodProps.requestModels) {
+        methodProps.requestModels = {}
+      }
+
+      methodProps.requestModels[contentType] = {
+        modelId: model.modelId
+      }
+
+      const validatorLogicalId = ''
+      const validator = new ag.RequestValidator(this.stack, validatorLogicalId, {
+        restApi: this.api,
+        requestValidatorName: `${modelName}-validator`,
+        validateRequestBody: true
+      });
+
+      methodProps.requestValidator = validator;
+    }
+
+    const addMethodOptions: ag.MethodOptions = Object.assign({}, methodProps);
+
+    return parent.addMethod(method, integration, addMethodOptions);
+  }
+
+  private async createIntegration(assetPath: string, id: string, props?: CreateIntegrationProps) {
     const lambdaProps = {
       runtime: props?.runtime || this.config.defaultRuntime,
       handler: props?.handler || this.config.defaultHandler,
@@ -137,4 +183,9 @@ export class AutoCdk {
   private createLambda(id: string, props: lambda.FunctionProps) {
     return new lambda.Function(this.stack, id, props);
   }
+}
+
+export async function gatherIntegrationOptions(path: string): Promise<ExportedIntegrationOptions> {
+  const exports = await import(path);
+  return {}
 }

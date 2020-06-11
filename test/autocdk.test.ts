@@ -1,7 +1,9 @@
 import { AutoCdk } from '../lib/autocdk';
-import { ResourceType } from '../lib/resources';
+import { gatherIntegrationOptions } from '../lib/autocdk';
 import { RouteType } from '../lib/routes';
 import { Environment } from '../lib/config';
+import { assert } from 'console';
+import { join } from 'path'
 
 describe('autocdk.ts', () => {
     it('constructRoutes', async () => {
@@ -69,5 +71,10 @@ describe('autocdk.ts', () => {
                 },
             },
         });
+    });
+    it('gatherIntegrationOptions', async () => {
+        const path = join(process.cwd(), 'test/mock/model/handler.js)')
+        const res = gatherIntegrationOptions(path);
+        expect(res).toEqual({});
     });
 });
