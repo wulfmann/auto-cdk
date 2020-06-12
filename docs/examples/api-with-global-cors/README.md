@@ -1,1 +1,0 @@
-# API with Global CORS
